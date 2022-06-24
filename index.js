@@ -19,6 +19,8 @@ module.exports = async (opts) => {
     offsets,
     fps,
     numFrames,
+    fast,
+    fastSize,
     ffmpegPath
   } = opts
 
@@ -33,6 +35,14 @@ module.exports = async (opts) => {
 
   const cmd = ffmpeg(input)
     .on('start', (cmd) => log({ cmd }))
+
+  if (fast) {
+    cmd.outputOptions([
+      '-preset:v ultrafast',
+      '-movflags faststart',
+      `-s ${fastSize.x || 640}x${fastSize.y || 640 / 2}`,
+    ])
+  }
 
   if (timestamps || offsets) {
     const folder = outputPath.dir
