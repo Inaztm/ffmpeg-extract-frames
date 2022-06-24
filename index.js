@@ -6,7 +6,7 @@ const probe = require('ffmpeg-probe')
 
 const noop = () => { }
 
-const timestampsMode = async ({ opts, cmd, outputPath }) => {
+const timestampsMode = ({ opts, cmd, outputPath }) => {
   const { output, timestamps, offsets, size } = opts
 
   const folder = outputPath.dir
@@ -74,7 +74,7 @@ const defaultMode = async ({ opts, cmd, outputPath }) => {
  * @param {Object} opts.ffmpegPath optional
  * @returns Promise
  */
-module.exports = async (opts) => {
+module.exports = (opts) => {
   const {
     log = noop,
     input,
