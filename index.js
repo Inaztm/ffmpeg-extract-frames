@@ -61,20 +61,26 @@ const defaultMode = ({ opts, cmd, outputPath }) => {
   })
 }
 
+/**
+ * 
+ * @param {Object} opts.log optional
+ * @param {Object} opts.input required
+ * @param {Object} opts.output required
+ * @param {Object} opts.timestamps optional
+ * @param {Object} opts.offsets optional
+ * @param {Object} opts.fps optional
+ * @param {Object} opts.numFrames optional
+ * @param {Object} opts.size optional
+ * @param {Object} opts.ffmpegPath optional
+ * @returns Promise
+ */
 module.exports = async (opts) => {
   const {
     log = noop,
-
-    // required
     input,
     output,
-
-    // optional
     timestamps,
     offsets,
-    fps,
-    numFrames,
-    size,
     ffmpegPath
   } = opts
 
