@@ -78,7 +78,6 @@ const defaultMode = async ({ opts, cmd, outputPath }) => {
  * @param {Object} opts.fast optional
  * @param {Object} opts.inputOptions optional
  * @param {Object} opts.outputOptions optional
- * @param {Object} opts.globalOptions optional
  * @returns Promise
  */
 module.exports = (opts) => {
@@ -91,8 +90,7 @@ module.exports = (opts) => {
     ffmpegPath,
     fast,
     inputOptions,
-    outputOptions,
-    globalOptions
+    outputOptions
   } = opts
 
   if (!input) throw new Error('missing required input')
@@ -126,10 +124,6 @@ module.exports = (opts) => {
 
   if (outputOptions) {
     cmd.addOutputOptions(inputOptions)
-  }
-
-  if (globalOptions) {
-    cmd.addOptions(globalOptions)
   }
 
   return modeRunner({ opts, cmd, outputPath })
