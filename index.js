@@ -4,6 +4,9 @@ const ffmpeg = require('fluent-ffmpeg')
 const path = require('path')
 const probe = require('ffmpeg-probe')
 
+const MODE_DEFAULT = 'deafult'
+const MODE_SCREENSHOTS = 'screenshots'
+
 const noop = () => { }
 
 const timestampsMode = ({ opts, cmd, outputPath }) => {
@@ -93,12 +96,17 @@ module.exports = (opts) => {
     ffmpeg.setFfmpegPath(ffmpegPath)
   }
 
+  const modes = {
+    default: defaultMode,
+    screenshots: timestampsMode,
+  }
+  const modeType = timestamps || offsets ? MODE_SCREENSHOTS : MODE_DEFAULT
+  const modeRunner = modes[modeType]
+
+  if (!modeRunner) throw new Error('mode not valid')
+
   const cmd = ffmpeg(input)
     .on('start', (cmd) => log({ cmd }))
 
-  if (timestamps || offsets) {
-    return timestampsMode({ opts, cmd, outputPath })
-  } else {
-    return defaultMode({ opts, cmd, outputPath })
-  }
+  return modeRunner({ opts, cmd, outputPath })
 }
