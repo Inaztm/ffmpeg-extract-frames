@@ -10,13 +10,14 @@ const MODE_SCREENSHOTS = 'screenshots'
 const noop = () => { }
 
 const timestampsMode = ({ opts, cmd, outputPath }) => {
-  const { output, timestamps, offsets, size } = opts
+  const { output, timestamps, offsets, size, fast } = opts
 
   const folder = outputPath.dir
   const filename = outputPath.base
   const screenshotsParams = {
     folder,
     filename,
+    fastSeek: fast || false,
     timestamps: timestamps || offsets.map((offset) => offset / 1000)
   }
   if (size) {
